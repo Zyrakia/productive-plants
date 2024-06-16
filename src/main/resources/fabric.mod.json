@@ -2,22 +2,28 @@
   "schemaVersion": 1,
   "id": "productive-plants",
   "version": "${version}",
-
   "name": "Productive Plants",
   "description": "Adds shimmering to harvestable plants.",
-  "authors": [],
-  "contact": {},
-
+  "authors": [
+    "Zyrakia"
+  ],
+  "contact": {
+    "repo": "https://github.com/zyrakia/productive-plants"
+  },
   "license": "MIT",
-  "icon": "assets/productive-plants/icon.png",
-
+  "icon": "/assets/icon.png",
   "environment": "client",
-  "entrypoints": {},
-
-
+  "entrypoints": {
+    "client": [
+      "dev.zyrakia.productiveplants.client.ProductivePlantsClient"
+    ],
+    "main": [
+      "dev.zyrakia.productiveplants.ProductivePlants"
+    ]
+  },
   "depends": {
     "fabricloader": ">=${loader_version}",
-        "fabric": "*",
+    "fabric": "*",
     "minecraft": "${minecraft_version}"
   }
 }
