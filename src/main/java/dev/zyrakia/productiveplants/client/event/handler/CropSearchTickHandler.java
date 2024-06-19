@@ -12,6 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -33,6 +34,11 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 	 */
 	private static final BlockFilter CROP_FILTER = (BlockState state) -> state.getBlock() instanceof CropBlock;
 
+	/**
+	 * The size of the block scanning region from the player.
+	 */
+	private static final Vec3i SCAN_REGION = new Vec3i(10, 5, 10);
+
 	private int tickCounter = 0;
 
 	@Override
@@ -52,7 +58,7 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 			return;
 
 		BlockPos currentPos = player.getBlockPos();
-		RegionBlockScanner scanner = RegionBlockScanner.fromCenter(Vec.of(currentPos), 10, 5);
+		RegionBlockScanner scanner = RegionBlockScanner.fromCenter(Vec.of(currentPos), SCAN_REGION);
 
 		ArrayList<BlockScanMatch> cropMatches = scanner.scanWorld(world, CROP_FILTER);
 		cropMatches.forEach(this::handleCropMatch);
