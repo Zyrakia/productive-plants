@@ -1,9 +1,9 @@
 package dev.zyrakia.productiveplants.client.blockscanning;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class RegionBlockScanner {
 		return new RegionBlockScanner(center.subtract(out), center.add(out));
 	}
 
-	public ArrayList<BlockScanMatch> scanWorld(ClientWorld world, BlockFilter filter) {
+	public ArrayList<BlockScanMatch> scanWorld(World world, BlockFilter filter) {
 		int initX = p1.getX();
 		int initY = p1.getY();
 		int initZ = p1.getZ();
@@ -38,7 +38,8 @@ public class RegionBlockScanner {
 				for (int z = initZ; z <= endZ; z++) {
 					BlockPos pos = new BlockPos(x, y, z);
 					BlockState state = world.getBlockState(pos);
-					if (filter.filter(state)) result.add(new BlockScanMatch(state, pos));
+					if (filter.filter(state))
+						result.add(new BlockScanMatch(world, state, pos));
 				}
 			}
 		}

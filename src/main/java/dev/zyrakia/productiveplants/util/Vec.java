@@ -1,5 +1,6 @@
 package dev.zyrakia.productiveplants.util;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
@@ -10,13 +11,43 @@ import net.minecraft.util.math.Vec3i;
 public class Vec {
 
 	/**
-	 * Truncates a 3 axis double vector into a 3 axis integer vector.
+	 * Returns a new integer vector with the truncated X, Y, Z of the {@link Vec3d}.
 	 *
-	 * @param doubleVec the double vector to truncate
+	 * @param vec the double vector to truncate
 	 * @return the truncated integer vector
 	 */
-	public static Vec3i truncDouble(Vec3d doubleVec) {
-		return new Vec3i((int) doubleVec.x, (int) doubleVec.y, (int) doubleVec.z);
+	public static Vec3i of(Vec3d vec) {
+		return new Vec3i((int) vec.x, (int) vec.y, (int) vec.z);
+	}
+
+	/**
+	 * Returns a new integer vector with the X, Y, Z of {@code n}.
+	 *
+	 * @param n the value of the vectors axes
+	 * @return the vector with all axis set to {@code n}
+	 */
+	public static Vec3i of(int n) {
+		return new Vec3i(n, n, n);
+	}
+
+	/**
+	 * Returns a new integer vector with the X, Y, Z of the {@link BlockPos}.
+	 *
+	 * @param pos the {@link BlockPos} to copy into the vector
+	 * @return the vector with the same values as the {@link BlockPos}
+	 */
+	public static Vec3i of(BlockPos pos) {
+		return new Vec3i(pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	/**
+	 * Returns a new double vector with the X, Y, Z of {@code n}.
+	 *
+	 * @param n the value of the vectors axes
+	 * @return the vector with all axis set to {@code n}
+	 */
+	public static Vec3d of(double n) {
+		return new Vec3d(n, n, n);
 	}
 
 }
