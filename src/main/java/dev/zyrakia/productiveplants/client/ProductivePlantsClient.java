@@ -1,11 +1,13 @@
 package dev.zyrakia.productiveplants.client;
 
 import dev.zyrakia.productiveplants.client.config.ProductivePlantsConfig;
+import dev.zyrakia.productiveplants.client.event.handler.CropHarvestHandler;
 import dev.zyrakia.productiveplants.client.event.handler.CropSearchTickHandler;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,7 +50,9 @@ public class ProductivePlantsClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		this.setupConfig();
+
 		ClientTickEvents.END_WORLD_TICK.register(new CropSearchTickHandler());
+		AttackBlockCallback.EVENT.register(new CropHarvestHandler());
 	}
 
 	/**
