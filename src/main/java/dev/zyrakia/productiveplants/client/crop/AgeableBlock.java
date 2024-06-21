@@ -1,9 +1,12 @@
 package dev.zyrakia.productiveplants.client.crop;
 
+import dev.zyrakia.productiveplants.client.ProductivePlantsClient;
 import dev.zyrakia.productiveplants.client.blockscanning.BlockFilter;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropBlock;
+import dev.zyrakia.productiveplants.client.config.ProductivePlantsConfig;
+import net.minecraft.block.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Wrapper around "crop" blocks to standardize
@@ -14,7 +17,7 @@ public class AgeableBlock {
 	/**
 	 * The {@link BlockState} of this {@link AgeableBlock}.
 	 */
-	private BlockState state;
+	private final BlockState state;
 
 	/**
 	 * Creates a new {@link AgeableBlock} wrapper around the given
@@ -36,6 +39,10 @@ public class AgeableBlock {
 		Block block = this.state.getBlock();
 		if (block instanceof CropBlock cropBlock) {
 			return cropBlock.getAge(this.state);
+		} else if (block instanceof NetherWartBlock) {
+			return this.state.get(NetherWartBlock.AGE);
+		} else if (block instanceof AttachedStemBlock) {
+			return 1;
 		}
 
 		return 0;
@@ -51,6 +58,10 @@ public class AgeableBlock {
 		Block block = this.state.getBlock();
 		if (block instanceof CropBlock cropBlock) {
 			return cropBlock.getMaxAge();
+		} else if (block instanceof NetherWartBlock) {
+			return NetherWartBlock.field_31199;
+		} else if (block instanceof AttachedStemBlock) {
+			return 1;
 		}
 
 		return -1;
@@ -62,6 +73,25 @@ public class AgeableBlock {
 	public static class SupportedFilter implements BlockFilter {
 
 		/**
+		 * The set of block classes that are currently implemented within
+		 * the {@link AgeableBlock} class.
+		 */
+		private final Set<Class<? extends Block>> supportedBlocks = new HashSet<>();
+
+		public SupportedFilter() {
+			ProductivePlantsConfig conf = ProductivePlantsClient.getConfig();
+
+			if (conf.supportedPlants.regularCrops)
+				this.supportedBlocks.add(CropBlock.class);
+
+			if (conf.supportedPlants.netherWarts)
+				this.supportedBlocks.add(NetherWartBlock.class);
+
+			if (conf.supportedPlants.attachedStems)
+				this.supportedBlocks.add(AttachedStemBlock.class);
+		}
+
+		/**
 		 * Returns true if the given {@link BlockState} is
 		 * linked ot a crop that should be detected by this mod.
 		 *
@@ -70,7 +100,8 @@ public class AgeableBlock {
 		 */
 		@Override
 		public boolean filter(BlockState state) {
-			return state.getBlock() instanceof CropBlock;
+			Block block = state.getBlock();
+			return supportedBlocks.stream().anyMatch((parent) -> parent.isAssignableFrom(block.getClass()));
 		}
 	}
 

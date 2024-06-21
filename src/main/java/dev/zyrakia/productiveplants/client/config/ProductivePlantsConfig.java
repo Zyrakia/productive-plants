@@ -21,15 +21,47 @@ import net.minecraft.util.Identifier;
 public class ProductivePlantsConfig implements ConfigData {
 
 	/**
-	 * Settings related to the crop maturity indication effect.
+	 * Whether harvesting of immature plant is disabled.
+	 */
+	public boolean allowImmatureHarvest = false;
+
+
+	/**
+	 * Settings related to the plant maturity indication effect.
 	 */
 	@ConfigEntry.Gui.CollapsibleObject(startExpanded = true)
 	public MaturityEffectSettings maturityEffect = new MaturityEffectSettings();
 
 	/**
-	 * Whether harvesting of immature crops is disabled.
+	 * Settings related to the plants that are observed by the mod.
 	 */
-	public boolean allowImmatureHarvest = false;
+	@ConfigEntry.Gui.CollapsibleObject
+	public SupportedPlantSettings supportedPlants = new SupportedPlantSettings();
+
+	/**
+	 * Inner category related to toggling the different plants that
+	 * this mod can support.
+	 */
+	public static class SupportedPlantSettings {
+		/**
+		 * Whether regular crops ({@link net.minecraft.block.CropBlock} extending blocks)
+		 * are observed by the mod.
+		 */
+		@ConfigEntry.Gui.Tooltip
+		public boolean regularCrops = true;
+
+		/**
+		 * Whether nether warts are observed by the mod.
+		 */
+		public boolean netherWarts = true;
+
+		/**
+		 * Whether attached stems ({@link net.minecraft.block.AttachedStemBlock} extending blocks)
+		 * are observed by the mod.
+		 */
+		@ConfigEntry.Gui.Tooltip
+		public boolean attachedStems = false;
+	}
 
 	/**
 	 * Inner category related to the maturity indication effect.

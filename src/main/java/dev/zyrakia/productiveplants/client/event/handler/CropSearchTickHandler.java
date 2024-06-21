@@ -19,8 +19,6 @@ import java.util.ArrayList;
 
 public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 
-	public static final AgeableBlock.SupportedFilter CROP_FILTER = new AgeableBlock.SupportedFilter();
-
 	/**
 	 * The decoration manager to play effects at a certain position.
 	 */
@@ -67,7 +65,7 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 		BlockPos currentPos = player.getBlockPos();
 		RegionBlockScanner scanner = RegionBlockScanner.fromCenter(Vec.of(currentPos), SCAN_REGION);
 
-		ArrayList<BlockScanMatch> cropMatches = scanner.scanWorld(world, CROP_FILTER);
+		ArrayList<BlockScanMatch> cropMatches = scanner.scanWorld(world, new AgeableBlock.SupportedFilter());
 		cropMatches.forEach(this::handleCropMatch);
 	}
 
