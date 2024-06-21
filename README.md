@@ -13,7 +13,8 @@ A Fabric mod that adds a few farming utilities to make your life just a little b
 
 **Early Harvest Prevention** - Stop killing your crops before it's time.
 
-> If enabled, immature crops will dodge your wild harvesting, so you can ravage through your farm without worry.
+> Immature crops will dodge your wild harvesting, so you can ravage through your farm without worry. This is temporarily
+> deactivated while crouching.
 
 ## Supported Versions
 
