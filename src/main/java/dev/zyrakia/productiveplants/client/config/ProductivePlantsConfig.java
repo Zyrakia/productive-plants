@@ -1,13 +1,16 @@
 package dev.zyrakia.productiveplants.client.config;
 
 import dev.zyrakia.productiveplants.client.ProductivePlantsClient;
+import dev.zyrakia.productiveplants.util.PlayerCommunication;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-
-import java.lang.reflect.Field;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 
 /**
  * An automatic configuration class supported
@@ -32,50 +35,45 @@ public class ProductivePlantsConfig implements ConfigData {
 	 * Inner category related to the maturity indication effect.
 	 */
 	public static class MaturityEffectSettings {
+		@ConfigEntry.Gui.Excluded
+		private static final String DEFAULT_EFFECT_IDENTIFIER = "minecraft:happy_villager";
+
 		/**
 		 * Whether the maturity effect is enabled.
 		 */
 		public boolean effectEnabled = true;
 
 		/**
-		 * The name of the effect that will be used. This is later
-		 * cast into a Minecraft effect.
+		 * The identifier of the effect that will be used.
 		 */
-		private String effectName = "happy villager";
+		private String effectIdentifier = DEFAULT_EFFECT_IDENTIFIER;
 
 		/**
-		 * Obtains the particle effect that is associated with the
-		 * given name cast into a static {@link ParticleEffect} from the
-		 * {@link ParticleTypes} class.
-		 *
-		 * @return the particle effect, or the default if the value was invalid
-		 */
-		public static ParticleEffect castNameToEffect(String name) {
-			String key = name.trim().toUpperCase().replace(" ", "_");
-
-			try {
-				Field effectField = ParticleTypes.class.getField(key);
-				Object effect = effectField.get(null);
-
-				if (effect instanceof ParticleEffect) {
-					return (ParticleEffect) effect;
-				} else
-					throw new NoSuchFieldException();
-			} catch (NoSuchFieldException | IllegalAccessException e) {
-				ProductivePlantsClient.LOGGER.warn("The effect \"{}\" is invalid. The default effect was selected.",
-						name);
-				return ParticleTypes.HAPPY_VILLAGER;
-			}
-		}
-
-		/**
-		 * Returns the currently configured effect name cast
+		 * Returns the currently configured effect ID cast
 		 * into a {@link ParticleEffect}.
 		 *
 		 * @return the currently configured particle effect
 		 */
 		public ParticleEffect getEffect() {
-			return castNameToEffect(this.effectName);
+			String formattedName = this.effectIdentifier.toLowerCase().replace(" ", "_");
+			Identifier effectIdentifier = Identifier.tryParse(formattedName);
+
+			if (effectIdentifier != null) {
+				ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(effectIdentifier);
+				if (particleType instanceof ParticleEffect) {
+					this.effectIdentifier = formattedName;
+					return (ParticleEffect) particleType;
+				}
+			}
+
+			Text errorMessage = Text.literal("").append("Effect identifier \"")
+					.append(Text.literal(this.effectIdentifier).formatted(Formatting.WHITE, Formatting.BOLD))
+					.append("\" is invalid and has been reset to the default value.").formatted(Formatting.GOLD);
+			PlayerCommunication.sendMessage(errorMessage);
+
+			this.effectIdentifier = DEFAULT_EFFECT_IDENTIFIER;
+
+			return getEffect();
 		}
 	}
 
