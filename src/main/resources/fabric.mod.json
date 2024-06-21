@@ -3,17 +3,22 @@
 	"id": "productive-plants",
 	"version": "${version}",
 	"name": "Productive Plants",
-	"description": "Adds shimmering to harvestable plants.",
+	"description": "Adds shimmering to crops when they are all grown up.",
 	"authors": [
 		"Zyrakia"
 	],
 	"contact": {
-		"repo": "https://github.com/zyrakia/productive-plants"
+		"homepage": "https://github.com/zyrakia/productive-plants",
+		"issues": "https://github.com/zyrakia/productive-plants/issues",
+		"sources": "https://github.com/zyrakia/productive-plants"
 	},
 	"license": "MIT",
-	"icon": "/assets/icon.png",
+	"icon": "./assets/icon.png",
 	"environment": "client",
 	"entrypoints": {
+		"modmenu": [
+			"dev.zyrakia.productiveplants.client.config.ProductivePlantsModMenuIntegration"
+		],
 		"client": [
 			"dev.zyrakia.productiveplants.client.ProductivePlantsClient"
 		],

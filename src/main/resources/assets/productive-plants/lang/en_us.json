@@ -1,0 +1,7 @@
+{
+	"text.autoconfig.productive-plants.title": "✨ Productive Plants ✨",
+	"text.autoconfig.productive-plants.option.allowImmatureHarvest": "Prevent Immature Harvesting",
+	"text.autoconfig.productive-plants.option.maturityEffect": "Maturity Indication Effect",
+	"text.autoconfig.productive-plants.option.maturityEffect.effectEnabled": "Show Effect",
+	"text.autoconfig.productive-plants.option.maturityEffect.effectName": "Effect Name"
+}

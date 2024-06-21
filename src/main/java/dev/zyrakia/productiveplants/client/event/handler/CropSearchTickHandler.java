@@ -1,7 +1,8 @@
 package dev.zyrakia.productiveplants.client.event.handler;
 
-import dev.zyrakia.productiveplants.client.blockscanning.BlockFilter;
+import dev.zyrakia.productiveplants.client.ProductivePlantsClient;
 import dev.zyrakia.productiveplants.client.blockscanning.BlockScanMatch;
+import dev.zyrakia.productiveplants.client.blockscanning.CropBlockFilter;
 import dev.zyrakia.productiveplants.client.blockscanning.RegionBlockScanner;
 import dev.zyrakia.productiveplants.client.cropdecoration.CropDecorationManager;
 import dev.zyrakia.productiveplants.util.Vec;
@@ -30,11 +31,6 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 	private static final int SEARCH_EVERY_TICKS = 10;
 
 	/**
-	 * The filter function used for block scanning.
-	 */
-	private static final BlockFilter CROP_FILTER = (BlockState state) -> state.getBlock() instanceof CropBlock;
-
-	/**
 	 * The size of the block scanning region from the player.
 	 */
 	private static final Vec3i SCAN_REGION = new Vec3i(10, 5, 10);
@@ -51,7 +47,16 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 		this.performCropSearch(world);
 	}
 
+	/**
+	 * Uses a {@link RegionBlockScanner} to scan for blocks around
+	 * the player.
+	 *
+	 * @param world the world that should be scanned
+	 */
 	public void performCropSearch(World world) {
+		if (!ProductivePlantsClient.getConfig().maturityEffect.effectEnabled)
+			return;
+
 		MinecraftClient client = MinecraftClient.getInstance();
 		ClientPlayerEntity player = client.player;
 		if (player == null)
@@ -60,10 +65,16 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 		BlockPos currentPos = player.getBlockPos();
 		RegionBlockScanner scanner = RegionBlockScanner.fromCenter(Vec.of(currentPos), SCAN_REGION);
 
-		ArrayList<BlockScanMatch> cropMatches = scanner.scanWorld(world, CROP_FILTER);
+		ArrayList<BlockScanMatch> cropMatches = scanner.scanWorld(world, new CropBlockFilter());
 		cropMatches.forEach(this::handleCropMatch);
 	}
 
+	/**
+	 * Decorates the given {@link BlockScanMatch}, assuming
+	 * that it is associated with a valid {@link CropBlock}.
+	 *
+	 * @param cropMatch the {@link BlockScanMatch} associated to a {@link CropBlock}
+	 */
 	private void handleCropMatch(BlockScanMatch cropMatch) {
 		BlockState cropState = cropMatch.state();
 		CropBlock cropBlock = (CropBlock) cropState.getBlock();

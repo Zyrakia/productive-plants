@@ -1,8 +1,8 @@
 package dev.zyrakia.productiveplants.client.cropdecoration;
 
+import dev.zyrakia.productiveplants.client.ProductivePlantsClient;
 import dev.zyrakia.productiveplants.util.Vec;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
@@ -16,11 +16,6 @@ import java.util.Random;
 public class CropDecorationManager {
 
 	/**
-	 * The particle that is used for all spawned decorations.
-	 */
-	private final ParticleEffect particle = ParticleTypes.HAPPY_VILLAGER;
-
-	/**
 	 * Plays the crop decoration particle at the given position
 	 * in the given world.
 	 *
@@ -29,7 +24,9 @@ public class CropDecorationManager {
 	 */
 	public void playEffectAt(World world, BlockPos pos) {
 		Vec3d particlePos = this.randomOffsetPos(pos);
-		world.addParticle(this.particle, particlePos.x, particlePos.y, particlePos.z, 0, 0, 0);
+
+		ParticleEffect effect = ProductivePlantsClient.getConfig().maturityEffect.getEffect();
+		world.addParticle(effect, particlePos.x, particlePos.y, particlePos.z, 0, 0, 0);
 	}
 
 	/**
@@ -41,7 +38,12 @@ public class CropDecorationManager {
 	 */
 	private Vec3d randomOffsetPos(Vec3i pos) {
 		Random r = new Random();
-		return Vec3d.of(pos).add(r.nextDouble(), r.nextDouble(), r.nextDouble());
+
+		final double minOffset = 0.25;
+		final double maxOffset = 0.75;
+
+		return Vec3d.of(pos).add(r.nextDouble(minOffset, maxOffset), r.nextDouble(minOffset, maxOffset),
+				r.nextDouble(minOffset, maxOffset));
 	}
 
 	/**
