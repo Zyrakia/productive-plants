@@ -2,12 +2,11 @@ package dev.zyrakia.productiveplants.client.event.handler;
 
 import dev.zyrakia.productiveplants.client.ProductivePlantsClient;
 import dev.zyrakia.productiveplants.client.blockscanning.BlockScanMatch;
-import dev.zyrakia.productiveplants.client.blockscanning.CropBlockFilter;
 import dev.zyrakia.productiveplants.client.blockscanning.RegionBlockScanner;
+import dev.zyrakia.productiveplants.client.crop.AgeableBlock;
 import dev.zyrakia.productiveplants.client.cropdecoration.CropDecorationManager;
 import dev.zyrakia.productiveplants.util.Vec;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -19,6 +18,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 
 public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
+
+	public static final AgeableBlock.SupportedFilter CROP_FILTER = new AgeableBlock.SupportedFilter();
 
 	/**
 	 * The decoration manager to play effects at a certain position.
@@ -34,6 +35,7 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 	 * The size of the block scanning region from the player.
 	 */
 	private static final Vec3i SCAN_REGION = new Vec3i(10, 5, 10);
+
 
 	private int tickCounter = 0;
 
@@ -65,7 +67,7 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 		BlockPos currentPos = player.getBlockPos();
 		RegionBlockScanner scanner = RegionBlockScanner.fromCenter(Vec.of(currentPos), SCAN_REGION);
 
-		ArrayList<BlockScanMatch> cropMatches = scanner.scanWorld(world, new CropBlockFilter());
+		ArrayList<BlockScanMatch> cropMatches = scanner.scanWorld(world, CROP_FILTER);
 		cropMatches.forEach(this::handleCropMatch);
 	}
 
@@ -76,11 +78,10 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 	 * @param cropMatch the {@link BlockScanMatch} associated to a {@link CropBlock}
 	 */
 	private void handleCropMatch(BlockScanMatch cropMatch) {
-		BlockState cropState = cropMatch.state();
-		CropBlock cropBlock = (CropBlock) cropState.getBlock();
+		AgeableBlock block = new AgeableBlock(cropMatch.state());
 
-		int age = cropBlock.getAge(cropState);
-		if (age == cropBlock.getMaxAge())
+		int age = block.getAge();
+		if (age == block.getMaxAge())
 			DECO_MANAGER.playEffectAt(cropMatch.world(), cropMatch.position());
 	}
 
