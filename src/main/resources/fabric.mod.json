@@ -3,7 +3,7 @@
 	"id": "productive-plants",
 	"version": "${version}",
 	"name": "Productive Plants",
-	"description": "Adds shimmering to crops when they are all grown up.",
+	"description": "Makes farming just a little bit easier by adding some utilities for differentiating mature plants.",
 	"authors": [
 		"Zyrakia"
 	],
