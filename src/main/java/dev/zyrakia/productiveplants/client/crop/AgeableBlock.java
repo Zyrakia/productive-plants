@@ -1,6 +1,6 @@
 package dev.zyrakia.productiveplants.client.crop;
 
-import dev.zyrakia.productiveplants.client.ProductivePlantsClient;
+import dev.zyrakia.productiveplants.ProductivePlants;
 import dev.zyrakia.productiveplants.client.blockscanning.BlockFilter;
 import dev.zyrakia.productiveplants.client.config.ProductivePlantsConfig;
 import net.minecraft.block.*;
@@ -9,8 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Wrapper around "crop" blocks to standardize
- * getting age properties.
+ * Wrapper around "crop" blocks to standardize getting age properties.
  */
 public class AgeableBlock {
 
@@ -20,8 +19,7 @@ public class AgeableBlock {
 	private final BlockState state;
 
 	/**
-	 * Creates a new {@link AgeableBlock} wrapper around the given
-	 * state.
+	 * Creates a new {@link AgeableBlock} wrapper around the given state.
 	 *
 	 * @param state the {@link BlockState} to wrap
 	 */
@@ -30,8 +28,7 @@ public class AgeableBlock {
 	}
 
 	/**
-	 * Returns the current age of this block, if
-	 * this block is not supported, `0` will be returned.
+	 * Returns the current age of this block, if this block is not supported, `0` will be returned.
 	 *
 	 * @return the current age
 	 */
@@ -49,8 +46,7 @@ public class AgeableBlock {
 	}
 
 	/**
-	 * Returns the maximum age of this block, if
-	 * this block is not supported, `-1` will be returned.
+	 * Returns the maximum age of this block, if this block is not supported, `-1` will be returned.
 	 *
 	 * @return the maximum age
 	 */
@@ -73,27 +69,19 @@ public class AgeableBlock {
 	public static class SupportedFilter implements BlockFilter {
 
 		/**
-		 * The set of block classes that are currently implemented within
-		 * the {@link AgeableBlock} class.
+		 * The set of block classes that are currently implemented within the {@link AgeableBlock} class.
 		 */
 		private final Set<Class<? extends Block>> supportedBlocks = new HashSet<>();
 
 		public SupportedFilter() {
-			ProductivePlantsConfig conf = ProductivePlantsClient.getConfig();
-
-			if (conf.supportedPlants.regularCrops)
-				this.supportedBlocks.add(CropBlock.class);
-
-			if (conf.supportedPlants.netherWarts)
-				this.supportedBlocks.add(NetherWartBlock.class);
-
-			if (conf.supportedPlants.attachedStems)
-				this.supportedBlocks.add(AttachedStemBlock.class);
+			ProductivePlantsConfig conf = ProductivePlants.CONFIG;
+			if (conf.decorateRegularCrops) this.supportedBlocks.add(CropBlock.class);
+			if (conf.decorateNetherWarts) this.supportedBlocks.add(NetherWartBlock.class);
+			if (conf.decorateAttachedStems) this.supportedBlocks.add(AttachedStemBlock.class);
 		}
 
 		/**
-		 * Returns true if the given {@link BlockState} is
-		 * linked ot a crop that should be detected by this mod.
+		 * Returns true if the given {@link BlockState} is linked ot a crop that should be detected by this mod.
 		 *
 		 * @param state the {@link BlockState} to check
 		 * @return whether the state is ac rop
