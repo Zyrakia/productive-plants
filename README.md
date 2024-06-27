@@ -24,6 +24,10 @@ A Fabric mod that adds a few farming utilities to make your life just a little b
 
 > Cropland will no longer be trampled by any entity.
 
+## Particles Demo
+
+![Particles Demo](./demo/particles.gif)
+
 ## Configuration
 
 This mod supports configuration via editing the `productive-plants.json5` file or while in-game via
