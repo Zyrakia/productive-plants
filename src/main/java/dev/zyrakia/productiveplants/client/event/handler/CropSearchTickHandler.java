@@ -1,6 +1,5 @@
 package dev.zyrakia.productiveplants.client.event.handler;
 
-import dev.zyrakia.productiveplants.ProductivePlants;
 import dev.zyrakia.productiveplants.client.blockscanning.BlockScanMatch;
 import dev.zyrakia.productiveplants.client.blockscanning.RegionBlockScanner;
 import dev.zyrakia.productiveplants.client.crop.AgeableBlock;
