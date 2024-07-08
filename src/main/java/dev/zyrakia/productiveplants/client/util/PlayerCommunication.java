@@ -13,11 +13,13 @@ public class PlayerCommunication {
 	 * Sends a system message in the chat or sets a message on the toolbar.
 	 *
 	 * @param msg     the message to send
-	 * @param toolbar whether the message should be sent in chat or above the toolbar
+	 * @param toolbar whether the message should be sent in chat or above the
+	 *                toolbar
 	 */
 	public static void sendMessage(Text msg, boolean toolbar) {
 		ClientPlayerEntity player = getPlayer();
-		if (player == null) return;
+		if (player == null)
+			return;
 
 		player.sendMessage(msg, toolbar);
 	}
@@ -36,6 +38,7 @@ public class PlayerCommunication {
 	 *
 	 * @return the current player entity
 	 */
+	@SuppressWarnings("resource")
 	private static ClientPlayerEntity getPlayer() {
 		return MinecraftClient.getInstance().player;
 	}

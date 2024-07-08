@@ -5,6 +5,7 @@ import dev.zyrakia.productiveplants.client.blockscanning.BlockScanMatch;
 import dev.zyrakia.productiveplants.client.blockscanning.RegionBlockScanner;
 import dev.zyrakia.productiveplants.client.crop.AgeableBlock;
 import dev.zyrakia.productiveplants.client.cropdecoration.CropDecorationManager;
+import dev.zyrakia.productiveplants.config.ProductivePlantsConfig;
 import dev.zyrakia.productiveplants.util.Vec;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.block.CropBlock;
@@ -18,7 +19,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 
 /**
- * Responsible for searching for crops in the area of decorating them if they are mature.
+ * Responsible for searching for crops in the area of decorating them if they
+ * are mature.
  */
 public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 
@@ -37,13 +39,13 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 	 */
 	private static final Vec3i SCAN_REGION = new Vec3i(10, 5, 10);
 
-
 	private int tickCounter = 0;
 
 	@Override
 	public void onEndTick(ClientWorld world) {
 		tickCounter++;
-		if (tickCounter < SEARCH_EVERY_TICKS) return;
+		if (tickCounter < SEARCH_EVERY_TICKS)
+			return;
 
 		this.tickCounter = 0;
 		this.performCropSearch(world);
@@ -55,11 +57,13 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 	 * @param world the world that should be scanned
 	 */
 	public void performCropSearch(World world) {
-		if (!ProductivePlants.CONFIG.maturityDecorationEnabled) return;
+		if (!ProductivePlantsConfig.maturityEffectEnabled)
+			return;
 
 		MinecraftClient client = MinecraftClient.getInstance();
 		ClientPlayerEntity player = client.player;
-		if (player == null) return;
+		if (player == null)
+			return;
 
 		BlockPos currentPos = player.getBlockPos();
 		RegionBlockScanner scanner = RegionBlockScanner.fromCenter(Vec.of(currentPos), SCAN_REGION);
@@ -69,7 +73,8 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 	}
 
 	/**
-	 * Decorates the given {@link BlockScanMatch}, assuming that it is associated with a valid {@link CropBlock}.
+	 * Decorates the given {@link BlockScanMatch}, assuming that it is associated
+	 * with a valid {@link CropBlock}.
 	 *
 	 * @param cropMatch the {@link BlockScanMatch} associated to a {@link CropBlock}
 	 */
@@ -77,7 +82,8 @@ public class CropSearchTickHandler implements ClientTickEvents.EndWorldTick {
 		AgeableBlock block = new AgeableBlock(cropMatch.state());
 
 		int age = block.getAge();
-		if (age == block.getMaxAge()) DECO_MANAGER.playEffectAt(cropMatch.world(), cropMatch.position());
+		if (age == block.getMaxAge())
+			DECO_MANAGER.playEffectAt(cropMatch.world(), cropMatch.position());
 	}
 
 }

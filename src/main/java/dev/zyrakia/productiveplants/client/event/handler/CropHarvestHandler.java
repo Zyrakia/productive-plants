@@ -1,7 +1,7 @@
 package dev.zyrakia.productiveplants.client.event.handler;
 
-import dev.zyrakia.productiveplants.ProductivePlants;
 import dev.zyrakia.productiveplants.client.crop.AgeableBlock;
+import dev.zyrakia.productiveplants.config.ProductivePlantsConfig;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,10 +18,11 @@ public class CropHarvestHandler implements AttackBlockCallback {
 
 	@Override
 	public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
-		if (player.isSneaking() || player.isCreative()) return ActionResult.PASS;
+		if (player.isSneaking() || player.isCreative())
+			return ActionResult.PASS;
 
 		BlockState state = world.getBlockState(pos);
-		if (!new AgeableBlock.SupportedFilter().filter(state) || ProductivePlants.CONFIG.allowImmatureHarvest)
+		if (!ProductivePlantsConfig.blockImmatureHarvest || !new AgeableBlock.SupportedFilter().filter(state))
 			return ActionResult.PASS;
 
 		AgeableBlock block = new AgeableBlock(state);

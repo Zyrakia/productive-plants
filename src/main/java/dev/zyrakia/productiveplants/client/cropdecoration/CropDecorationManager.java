@@ -1,6 +1,6 @@
 package dev.zyrakia.productiveplants.client.cropdecoration;
 
-import dev.zyrakia.productiveplants.ProductivePlants;
+import dev.zyrakia.productiveplants.config.ProductivePlantsConfig;
 import dev.zyrakia.productiveplants.util.Vec;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.BlockPos;
@@ -24,12 +24,13 @@ public class CropDecorationManager {
 	public void playEffectAt(World world, BlockPos pos) {
 		Vec3d particlePos = this.randomOffsetPos(pos);
 
-		ParticleEffect effect = ProductivePlants.CONFIG.getEffect();
+		ParticleEffect effect = ProductivePlantsConfig.getEffect();
 		world.addParticle(effect, particlePos.x, particlePos.y, particlePos.z, 0, 0, 0);
 	}
 
 	/**
-	 * Offsets the given integer vector by a random amount between 0 - 1 in each direction.
+	 * Offsets the given integer vector by a random amount between 0 - 1 in each
+	 * direction.
 	 *
 	 * @param pos the vector to offset
 	 * @return the offset vector
@@ -46,7 +47,8 @@ public class CropDecorationManager {
 	}
 
 	/**
-	 * Offsets the given block position by a random amount between 0 - 1 in each direction.
+	 * Offsets the given block position by a random amount between 0 - 1 in each
+	 * direction.
 	 *
 	 * @param pos the block position to offset
 	 * @return the offset vector

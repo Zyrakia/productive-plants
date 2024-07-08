@@ -4,9 +4,7 @@
 	"version": "${version}",
 	"name": "Productive Plants",
 	"description": "Makes farming just a little bit easier by adding some utilities for differentiating mature plants.",
-	"authors": [
-		"Zyrakia"
-	],
+	"authors": ["Zyrakia"],
 	"contact": {
 		"homepage": "https://github.com/zyrakia/productive-plants",
 		"issues": "https://github.com/zyrakia/productive-plants/issues",
@@ -16,24 +14,16 @@
 	"icon": "./assets/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"modmenu": [
-			"dev.zyrakia.productiveplants.client.config.ProductivePlantsModMenuIntegration"
-		],
-		"client": [
-			"dev.zyrakia.productiveplants.client.ProductivePlantsClient"
-		],
-		"main": [
-			"dev.zyrakia.productiveplants.ProductivePlants"
-		]
+		"modmenu": ["dev.zyrakia.productiveplants.client.config.ProductivePlantsModMenuIntegration"],
+		"client": ["dev.zyrakia.productiveplants.client.ProductivePlantsClient"],
+		"main": ["dev.zyrakia.productiveplants.ProductivePlants"]
 	},
-	"mixins": [
-		"productive-plants.mixins.json"
-	],
+	"mixins": ["productive-plants.mixins.json"],
 	"depends": {
 		"fabricloader": ">=${loader_version}",
 		"minecraft": "${minecraft_version}",
 		"fabric-api": ">=${fabric_version}",
-		"yet_another_config_lib_v3": ">=${yacl_version}"
+		"resourcefulconfig": "${rconfig_version}"
 	},
 	"recommends": {
 		"modmenu": ">=${modmenu_version}"

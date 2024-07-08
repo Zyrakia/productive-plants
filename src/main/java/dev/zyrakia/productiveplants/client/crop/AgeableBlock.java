@@ -1,8 +1,7 @@
 package dev.zyrakia.productiveplants.client.crop;
 
-import dev.zyrakia.productiveplants.ProductivePlants;
 import dev.zyrakia.productiveplants.client.blockscanning.BlockFilter;
-import dev.zyrakia.productiveplants.client.config.ProductivePlantsConfig;
+import dev.zyrakia.productiveplants.config.ProductivePlantsConfig;
 import net.minecraft.block.*;
 
 import java.util.HashSet;
@@ -28,7 +27,8 @@ public class AgeableBlock {
 	}
 
 	/**
-	 * Returns the current age of this block, if this block is not supported, `0` will be returned.
+	 * Returns the current age of this block, if this block is not supported, `0`
+	 * will be returned.
 	 *
 	 * @return the current age
 	 */
@@ -46,7 +46,8 @@ public class AgeableBlock {
 	}
 
 	/**
-	 * Returns the maximum age of this block, if this block is not supported, `-1` will be returned.
+	 * Returns the maximum age of this block, if this block is not supported, `-1`
+	 * will be returned.
 	 *
 	 * @return the maximum age
 	 */
@@ -69,19 +70,23 @@ public class AgeableBlock {
 	public static class SupportedFilter implements BlockFilter {
 
 		/**
-		 * The set of block classes that are currently implemented within the {@link AgeableBlock} class.
+		 * The set of block classes that are currently implemented within the
+		 * {@link AgeableBlock} class.
 		 */
 		private final Set<Class<? extends Block>> supportedBlocks = new HashSet<>();
 
 		public SupportedFilter() {
-			ProductivePlantsConfig conf = ProductivePlants.CONFIG;
-			if (conf.decorateRegularCrops) this.supportedBlocks.add(CropBlock.class);
-			if (conf.decorateNetherWarts) this.supportedBlocks.add(NetherWartBlock.class);
-			if (conf.decorateAttachedStems) this.supportedBlocks.add(AttachedStemBlock.class);
+			if (ProductivePlantsConfig.SupportedPlants.regularCrops)
+				this.supportedBlocks.add(CropBlock.class);
+			if (ProductivePlantsConfig.SupportedPlants.netherWarts)
+				this.supportedBlocks.add(NetherWartBlock.class);
+			if (ProductivePlantsConfig.SupportedPlants.attachedStems)
+				this.supportedBlocks.add(AttachedStemBlock.class);
 		}
 
 		/**
-		 * Returns true if the given {@link BlockState} is linked ot a crop that should be detected by this mod.
+		 * Returns true if the given {@link BlockState} is linked ot a crop that should
+		 * be detected by this mod.
 		 *
 		 * @param state the {@link BlockState} to check
 		 * @return whether the state is ac rop
