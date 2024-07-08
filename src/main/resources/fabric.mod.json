@@ -3,7 +3,7 @@
 	"id": "productive-plants",
 	"version": "${version}",
 	"name": "Productive Plants",
-	"description": "Makes farming just a little bit easier by adding some utilities for differentiating mature plants.",
+	"description": "A Fabric mod that adds a few farming utilities to make your life just a little bit easier..",
 	"authors": ["Zyrakia"],
 	"contact": {
 		"homepage": "https://github.com/zyrakia/productive-plants",

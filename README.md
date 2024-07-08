@@ -2,7 +2,7 @@
 
 ![Static Badge](https://img.shields.io/badge/Environment-Client_%26_Server-orange?style=for-the-badge)
 [![Static Badge](https://img.shields.io/badge/Supports-ModMenu-lightgreen?style=for-the-badge)](https://modrinth.com/mod/modmenu)
-[![Static Badge](https://img.shields.io/badge/Requires-YACL-red?style=for-the-badge&logo=dependabot)](https://modrinth.com/mod/yacl)
+[![Static Badge](https://img.shields.io/badge/Requires-Resourceful%20Config%20v2.1.2-red?style=for-the-badge&logo=dependabot&color=red)](https://modrinth.com/mod/resourceful-config/version/PlEObkl9)
 
 A Fabric mod that adds a few farming utilities to make your life just a little bit easier.
 
@@ -16,7 +16,7 @@ A Fabric mod that adds a few farming utilities to make your life just a little b
 **Early Harvest Prevention** - Stop killing your crops before it's time.
 
 > Immature crops will dodge your wild harvesting, so you can ravage through your farm without worry. This is temporarily
-> deactivated while crouching.
+> deactivated while sneaking.
 
 ## Server Features
 
@@ -30,11 +30,9 @@ A Fabric mod that adds a few farming utilities to make your life just a little b
 
 ## Configuration
 
-This mod supports configuration via editing the `productive-plants.json5` file or while in-game via
-the [ModMenu](https://modrinth.com/mod/modmenu)
-screen. Server
-features are only configurable in-game when in single player.
+This mod supports configuration via editing the `productive-plants.jsonc` file or in-game via
+the [ModMenu](https://modrinth.com/mod/modmenu) screen.
 
 ## Dependencies
 
-- [YACL](https://modrinth.com/mod/yacl) (Yet Another Config Library)
+-   [Resourceful Config v2.1.2](https://modrinth.com/mod/resourceful-config/version/PlEObkl9)
