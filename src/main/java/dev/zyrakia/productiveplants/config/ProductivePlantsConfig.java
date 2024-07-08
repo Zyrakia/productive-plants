@@ -5,6 +5,8 @@ import com.teamresourceful.resourcefulconfig.common.annotations.Comment;
 import com.teamresourceful.resourcefulconfig.common.annotations.Config;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
+import com.teamresourceful.resourcefulconfig.common.annotations.DoubleRange;
+import com.teamresourceful.resourcefulconfig.common.annotations.IntRange;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 import com.teamresourceful.resourcefulconfig.web.annotations.WebInfo;
 
@@ -40,6 +42,23 @@ public final class ProductivePlantsConfig {
 	@ConfigEntry(id = "maturity-effect-identifier", type = EntryType.STRING, translation = "Effect Identifier")
 	@Comment(value = "This should be the identifier of a Minecraft or mod particle effect.")
 	public static String maturityEffectIdentifier = "minecraft:happy_villager";
+
+	/**
+	 * Determines the amount of particle instances that are spawned.
+	 */
+	@ConfigEntry(id = "maturity-effect-intensity", type = EntryType.INTEGER, translation = "Effect Intensity")
+	@Comment(value = "This determines the amount of particle instances spawned on each block per detection tick.")
+	@IntRange(min = 1, max = 10)
+	public static int maturityEffectIntensity = 1;
+
+	/**
+	 * Determines that maximum amount of random spread (from block center) that an
+	 * indication effect can spawn at.
+	 */
+	@ConfigEntry(id = "maturity-effect-spread", type = EntryType.DOUBLE, translation = "Maximum Effect Spread")
+	@Comment(value = "This determines the maximum random distance from the center of the mature crop the particle can appear.")
+	@DoubleRange(min = 0, max = 1.5)
+	public static double maturityEffectSpread = 0.35;
 
 	/**
 	 * Determines whether immature plants can be harvested.

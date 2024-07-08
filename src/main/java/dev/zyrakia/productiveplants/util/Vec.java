@@ -50,4 +50,16 @@ public class Vec {
 		return new Vec3d(n, n, n);
 	}
 
+	/**
+	 * Returns a new double vector with the given X, Y, Z of the {@link BlockPos},
+	 * but offset by 0.5 in each axis to align with the center of the given block
+	 * position.
+	 * 
+	 * @param pos the {@link BlockPos} to copy into the vector
+	 * @return the block-center aligned vector
+	 */
+	public static Vec3d ofCenter(BlockPos pos) {
+		return new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+	}
+
 }
